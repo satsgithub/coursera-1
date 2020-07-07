@@ -1,3 +1,4 @@
+/*NOTE:PLEASE USE C++11 ENABLED COMPILER OR RUN MY CODE ON THIS->"https://www.onlinegdb.com/online_c++_compiler"*/
 /*djikstra's algorithm (monte carlo simulation)*/
 #include<bits/stdc++.h>
 using namespace std;
