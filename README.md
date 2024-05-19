@@ -83,3 +83,32 @@
 
 
 
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+HTTP Error 403.14 - Forbidden
+The Web server is configured to not list the contents of this directory.
+
+Most likely causes:
+A default document is not configured for the requested URL, and directory browsing is not enabled on the server.
+
+Things you can try:
+If you do not want to enable directory browsing, ensure that a default document is configured and that the file exists.
+Enable directory browsing.
+Go to the IIS Express install directory.
+Run appcmd set config /section:system.webServer/directoryBrowse /enabled:true to enable directory browsing at the server level.
+Run appcmd set config ["SITE_NAME"] /section:system.webServer/directoryBrowse /enabled:true to enable directory browsing at the site level.
+Verify that the configuration/system.webServer/directoryBrowse@enabled attribute is set to true in the site or application configuration file.
+
+Detailed Error Information:
+Module	   DirectoryListingModule
+Notification	   ExecuteRequestHandler
+Handler	   StaticFile
+Error Code	   0x00000000
+Requested URL	   https://localhost:44301/
+Physical Path	   C:\src\C#\CarInformationMgmtSystem\CarInfoMgmtSystem
+Logon Method	   Anonymous
+Logon User	   Anonymous
+
+
+
