@@ -350,6 +350,74 @@ Type nvarchar(50)
 
 
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+DBMS Tables(new)
+
+-- Create Database
+CREATE DATABASE CarInfoMgmtSys;
+GO
+
+-- Use the Database
+USE CarInfoMgmtSys;
+GO
+
+-- Create the Manufacturer Table
+CREATE TABLE Manufacturer (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Name NVARCHAR(255) NOT NULL,
+    ContactNo CHAR(10) NOT NULL,
+    RegisteredOffice NVARCHAR(255) NOT NULL
+);
+GO
+
+-- Create the CarType Table
+CREATE TABLE CarType (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Type NVARCHAR(50) NOT NULL
+);
+GO
+
+-- Create the CarTransmissionType Table
+CREATE TABLE CarTransmissionType (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Type NVARCHAR(50) NOT NULL
+);
+GO
+
+-- Create the Car Table
+CREATE TABLE Car (
+    CarId INT PRIMARY KEY IDENTITY(1,1),
+    ManufacturerId INT NOT NULL,
+    CarTypeId INT NOT NULL,
+    TransmissionTypeId INT NOT NULL,
+    ManufacturerName NVARCHAR(255) NOT NULL,
+    Model NVARCHAR(255) UNIQUE NOT NULL,
+    Type NVARCHAR(50) NOT NULL,
+    Engine CHAR(4) NOT NULL CHECK (Engine LIKE '[0-9].[0-9]L'),
+    BHP INT NOT NULL,
+    Transmission NVARCHAR(50) NOT NULL CHECK (Transmission IN ('Manual', 'Automatic')),
+    Mileage INT NOT NULL,
+    Seat INT NOT NULL,
+    AirBagDetails NVARCHAR(255) NOT NULL,
+    BootSpace INT NOT NULL,
+    Price DECIMAL(18, 2) NOT NULL,
+    FOREIGN KEY (ManufacturerId) REFERENCES Manufacturer(Id),
+    FOREIGN KEY (CarTypeId) REFERENCES CarType(Id),
+    FOREIGN KEY (TransmissionTypeId) REFERENCES CarTransmissionType(Id)
+);
+GO
+
+-- Insert initial data into CarType
+INSERT INTO CarType (Type) VALUES ('Hatchback'), ('Sedan'), ('SUV');
+GO
+
+-- Insert initial data into CarTransmissionType
+INSERT INTO CarTransmissionType (Type) VALUES ('Manual'), ('Automatic');
+GO
+
+
+
 
 
 
