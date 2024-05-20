@@ -352,19 +352,15 @@ Type nvarchar(50)
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-DBMS Tables(new)
+DBMS Tables(new) (need to make few more changes before implementing SPs, opened vacancy to create BL conditions as well)
 
--- Create Database
-CREATE DATABASE CarInfoMgmtSys;
-GO
+use [SatyaFirstAmerican]
 
--- Use the Database
-USE CarInfoMgmtSys;
-GO
+
 
 -- Create the Manufacturer Table
 CREATE TABLE Manufacturer (
-    Id INT PRIMARY KEY IDENTITY(1,1),
+    Id INT PRIMARY KEY IDENTITY(101,1),
     Name NVARCHAR(255) NOT NULL,
     ContactNo CHAR(10) NOT NULL,
     RegisteredOffice NVARCHAR(255) NOT NULL
@@ -373,21 +369,21 @@ GO
 
 -- Create the CarType Table
 CREATE TABLE CarType (
-    Id INT PRIMARY KEY IDENTITY(1,1),
+    Id INT PRIMARY KEY IDENTITY(201,1),
     Type NVARCHAR(50) NOT NULL
 );
 GO
 
 -- Create the CarTransmissionType Table
 CREATE TABLE CarTransmissionType (
-    Id INT PRIMARY KEY IDENTITY(1,1),
+    Id INT PRIMARY KEY IDENTITY(301,1),
     Type NVARCHAR(50) NOT NULL
 );
 GO
 
 -- Create the Car Table
 CREATE TABLE Car (
-    CarId INT PRIMARY KEY IDENTITY(1,1),
+    CarId INT PRIMARY KEY,
     ManufacturerId INT NOT NULL,
     CarTypeId INT NOT NULL,
     TransmissionTypeId INT NOT NULL,
@@ -415,6 +411,46 @@ GO
 -- Insert initial data into CarTransmissionType
 INSERT INTO CarTransmissionType (Type) VALUES ('Manual'), ('Automatic');
 GO
+
+
+---Insert initial data into Manufacturer
+INSERT INTO Manufacturer (Name, ContactNo, RegisteredOffice) VALUES ('Maruti', 1234567890, 'Pune');
+INSERT INTO Manufacturer (Name, ContactNo, RegisteredOffice) VALUES ('Toyota', 2234567890, 'Mumbai');
+INSERT INTO Manufacturer (Name, ContactNo, RegisteredOffice) VALUES ('Tata', 3234567890, 'UP');
+
+
+
+
+select * from Car
+
+select * from CarType
+
+select * from Manufacturer
+
+select * from CarTransmissionType
+
+
+---delete from Car SP
+
+delete from Car Where CarId=1;
+
+---Add. List and Delete into CarType SP
+INSERT INTO CarType Values( 'Wagons')
+SELECT * FROM CarType
+Delete from CarType WHERE Id=4  --- will only delete if it is not being used in
+                                ---the car table since it is referencing it, Use 
+								---BL for calling Car table to check whether the 
+								---data you want to delete is in the car table or not
+
+--DELETE FROM CarType WHERE Id=4
+
+
+---Add, List and Delete into CarTransmissionType SP
+
+INSERT INTO CarTransmissionType VALUES('Hybrid')
+SELECT * FROM CarTransmissionType
+DELETE FROM CarTransmissionType WHERE Id=3
+
 
 
 
