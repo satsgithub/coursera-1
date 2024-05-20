@@ -293,6 +293,64 @@ namespace LoginApp
         }
     }
 }
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+DBMS tables(OLD)
+
+use [CarInfoMgmtSys]
+
+--Create Car Table with Foreign Key Constraints
+
+create table Car(
+
+CarId int primary key,
+
+ManufacturerName nvarchar(100),
+Model nvarchar(100) unique,
+Type nvarchar(50),
+Engine nvarchar(4) check(Engine LIKE '[0-9].[0-9]L'),
+BHP int,
+TransmissionId int,
+Mileage int,
+Seats int,
+AirBagDetails nvarchar(255),
+BootSpace int,
+Price decimal(18,2),
+);
+
+
+--Create Manufacturer Table
+
+create table Manufacturer(
+ManufacturingId int primary key,
+--CarId int,
+Name nvarchar(100),
+ContactNo char(10) CHECK(LEN(ContactNo)=10),
+RegisteredOffice nvarchar(255)
+);
+
+
+--Create CarType Table
+
+create table CarType(
+CarTypeId int primary key,
+--CarId int,
+Type nvarchar(50),
+);
+
+
+--Create CarTransmissionType Table
+
+create table CarTransmissionType(
+TransmissionId int primary key,
+--CarId int,
+Type nvarchar(50)
+);
+
+
+
+
 
 
 
