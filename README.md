@@ -110,5 +110,203 @@ Physical Path	   C:\src\C#\CarInformationMgmtSystem\CarInfoMgmtSystem
 Logon Method	   Anonymous
 Logon User	   Anonymous
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Login.aspx.cs
+
+
+using System;
+using System.Web.UI;
+using LoginApp.DAL;
+
+namespace LoginApp
+{
+    public partial class Login : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+        }
+
+        protected void btnLogin_Click(object sender, EventArgs e)
+        {
+            string username = txtUsername.Text;
+            string password = txtPassword.Text;
+
+            if (username == "admin" && password == "admin") // Simplified admin login for demonstration
+            {
+                Session["Username"] = username;
+                Session["Role"] = "Admin";
+                Response.Redirect("Admin.aspx");
+            }
+            else
+            {
+                UserDAL userDAL = new UserDAL();
+                bool isValidUser = userDAL.ValidateUser(username, password);
+
+                if (isValidUser)
+                {
+                    Session["Username"] = username;
+                    Session["Role"] = "Customer";
+                    Response.Redirect("Customer.aspx");
+                }
+                else
+                {
+                    lblMessage.Text = "Invalid username or password.";
+                }
+            }
+        }
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Admin.aspx  (Web Form)
+
+<%@ Page Title="Admin" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeBehind="Admin.aspx.cs" Inherits="LoginApp.Admin" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>Admin Page</h2>
+    <p>Welcome, Admin!</p>
+    <!-- Add UI for managing cars (CRUD operations) -->
+</asp:Content>
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+Cutomer.aspx
+
+
+<%@ Page Title="Customer" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeBehind="Customer.aspx.cs" Inherits="LoginApp.Customer" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>Customer Page</h2>
+    <p>Welcome, Customer!</p>
+    <!-- Add UI for searching and viewing car details -->
+</asp:Content>
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Admin.aspx.cs
+
+
+using System;
+using LoginApp.DAL;
+
+namespace LoginApp
+{
+    public partial class Admin : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (Session["Role"] == null || Session["Role"].ToString() != "Admin")
+            {
+                Response.Redirect("Login.aspx");
+            }
+        }
+
+        // Add methods for handling CRUD operations
+    }
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Customer.aspx.cs
+
+
+
+
+using System;
+
+namespace LoginApp
+{
+    public partial class Customer : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (Session["Role"] == null || Session["Role"].ToString() != "Customer")
+            {
+                Response.Redirect("Login.aspx");
+            }
+        }
+
+        // Add methods for searching and viewing car details
+    }
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Output Caching (Add output caching to the methods that display search results.)
+
+
+using System;
+using System.Web.UI;
+
+namespace LoginApp
+{
+    public partial class Customer : Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (Session["Role"] == null || Session["Role"].ToString() != "Customer")
+            {
+                Response.Redirect("Login.aspx");
+            }
+        }
+
+        [OutputCache(Duration = 60, VaryByParam = "none")]
+        public DataTable GetCachedCarsByManufacturerAndType(string manufacturerName, string type)
+        {
+            CarDAL carDAL = new CarDAL();
+            return carDAL.GetCarsByManufacturerAndType(manufacturerName, type);
+        }
+
+        // Add methods for displaying search results
+    }
+}
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Example method for fetching and displaying car details:
+
+
+
+using System;
+using System.Data;
+
+namespace LoginApp
+{
+    public partial class Customer : Page
+    {
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            string manufacturerName = txtManufacturerName.Text;
+            string type = ddlCarType.SelectedValue;
+            DataTable dt = GetCachedCarsByManufacturerAndType(manufacturerName, type);
+
+            // Bind the results to a GridView or other UI control
+            gvCarResults.DataSource = dt;
+            gvCarResults.DataBind();
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
