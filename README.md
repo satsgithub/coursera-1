@@ -750,11 +750,57 @@ DAL
 =====
 
 
+1.AddCarDAL
+==========
+===========
+
+public void AddCarDAL(Car objCar)
+{
+    SqlConnection con = new SqlConnection("server=(localdb)\\local;" +
+        "database=SatyaFirstAmerican;" +
+        "integrated security=true");
+
+    SqlCommand cmd = new SqlCommand("AddCar", con);
+    cmd.CommandType = CommandType.StoredProcedure;
+
+    cmd.Parameters.AddWithValue("@CarId", objCar.CarId);
+    cmd.Parameters.AddWithValue("@ManufacturerId", objCar.ManufacturerId);
+    cmd.Parameters.AddWithValue("@CarTypeId", objCar.CarTypeId);
+    cmd.Parameters.AddWithValue("@TransmissiontypeId", objCar.TransmissiontypeId);
+    cmd.Parameters.AddWithValue("@ManufacturerName", objCar.ManufacturerName);
+    cmd.Parameters.AddWithValue("@Model", objCar.Model);
+    cmd.Parameters.AddWithValue("@Type", objCar.Type);
+    cmd.Parameters.AddWithValue("@Engine", objCar.Engine);
+    cmd.Parameters.AddWithValue("@BHP", objCar.Bhp);
+    cmd.Parameters.AddWithValue("@Transmission", objCar.Transmission);
+    cmd.Parameters.AddWithValue("@Mileage", objCar.Mileage);
+    cmd.Parameters.AddWithValue("@Seats", objCar.Seat);
+    cmd.Parameters.AddWithValue("@AirBagDetails", objCar.AirBagDetails);
+    cmd.Parameters.AddWithValue("@BootSpace", objCar.BootSpace);
+    cmd.Parameters.AddWithValue("@Price", objCar.Price);
+
+    con.Open();
+    cmd.ExecuteNonQuery();
+    con.Close();
+}
+
+
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+BL
+===
+====
 
+1. AddCarBAL
+==============
+=================
 
+public static void addCarBAL(Car objCar)
+{
+    CarInfoMgmtSystemDAL objDAL = new CarInfoMgmtSystemDAL();
+    objDAL.AddCarDAL(objCar);
+}
 
 
 
