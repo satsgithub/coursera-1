@@ -492,7 +492,14 @@ END
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Last
+Last Stored Procedures(Final)
+---------------------------------
+
+
+CarStoredProcedures (CRUD operations SP)
+--------------------
+---------------------
+
 
 
 AddCar SP
@@ -526,6 +533,104 @@ BEGIN
 	                         @ManufacturerName,@Model,@Type, @Engine, @BHP, @Transmission,@Mileage, @Seats, @AirBagDetails,
 	                         @BootSpace,@Price);
 END
+
+
+
+UpdateCar
+----------
+----------
+
+CREATE PROCEDURE UpdateCar
+    @CarId INT,
+    @ManufacturerId INT,
+    @CarTypeId INT,
+    @TransmissionTypeId INT,
+    @ManufacturerName NVARCHAR(255),
+    @Model NVARCHAR(255),
+    @Type NVARCHAR(50),
+    @Engine CHAR(4),
+    @BHP INT,
+    @Transmission NVARCHAR(50),
+    @Mileage INT,
+    @Seats INT,
+    @AirBagDetails NVARCHAR(255),
+    @BootSpace INT,
+    @Price DECIMAL(18, 2)
+AS
+BEGIN
+    UPDATE Car
+    SET ManufacturerId = @ManufacturerId,
+        CarTypeId = @CarTypeId,
+        TransmissionTypeId = @TransmissionTypeId,
+        ManufacturerName = @ManufacturerName,
+        Model = @Model,
+        Type = @Type,
+        Engine = @Engine,
+        BHP = @BHP,
+        Transmission = @Transmission,
+        Mileage = @Mileage,
+        Seat = @Seats,
+        AirBagDetails = @AirBagDetails,
+        BootSpace = @BootSpace,
+        Price = @Price
+    WHERE CarId = @CarId;
+END
+
+
+DeleteCar
+-----------
+-----------
+
+CREATE PROCEDURE DeleteCar
+    @CarId INT
+AS
+BEGIN
+    DELETE FROM Car
+    WHERE CarId = @CarId;
+END
+
+
+SearchCarByName
+----------------
+----------------
+
+CREATE PROCEDURE SearchCarByName
+    @Model NVARCHAR(255)
+AS
+BEGIN
+    SELECT * FROM Car
+    WHERE Model = @Model;
+END
+
+
+SearchCarByManufacturerName
+------------------------------
+------------------------------
+
+CREATE PROCEDURE SearchCarByManufacturerName
+    @ManufacturerName NVARCHAR(255)
+AS
+BEGIN
+    SELECT * FROM Car
+    WHERE ManufacturerName = @ManufacturerName;
+END
+
+
+SearchCarByType
+---------------
+-----------------
+
+CREATE PROCEDURE SearchCarByType
+    @Type NVARCHAR(50)
+AS
+BEGIN
+    SELECT * FROM Car
+    WHERE Type = @Type;
+END
+
+
+
+
 
 
 
@@ -634,6 +739,20 @@ Delete from CarType WHERE Id=202  --- will only delete if it is not being used i
 INSERT INTO CarTransmissionType VALUES('Hybrid')
 SELECT * FROM CarTransmissionType
 DELETE FROM CarTransmissionType WHERE Id=3
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+DAL
+====
+=====
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 
 
