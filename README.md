@@ -634,6 +634,76 @@ Delete from CarType WHERE Id=202  --- will only delete if it is not being used i
 INSERT INTO CarTransmissionType VALUES('Hybrid')
 SELECT * FROM CarTransmissionType
 DELETE FROM CarTransmissionType WHERE Id=3
+==============================================================================================================
+<%@ Page Title="Customer Data" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Customer.aspx.cs" Inherits="CarInfoMang.Customer" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        #btnSearch{
+            
+                
+        }
+    </style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="cphOpenSideNav" runat="server">
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="cphSideNav" runat="server">
+</asp:Content>
+<asp:Content ID="Content4" ContentPlaceHolderID="cphBody" runat="server">
+
+    <table class="w-100">
+      <script type="text/javascript">
+    function showTextbox() {
+        var dropdown = document.getElementById('<%= ddlOptions.ClientID %>');
+        var textbox = document.getElementById('<%= txtSearch.ClientID %>');
+        if (dropdown.value !== "") {
+            textbox.style.display = 'inline-block';
+        }
+        else {
+            textbox.style.display = 'none';
+        }
+    }
+     </script>
+        <div style="background-color: darkgrey; padding-top: 20px; padding-bottom:20px; font-family:'Garamond'">
+            <asp:DropDownList ID="ddlOptions" AppendDataBoundItems="true" runat="server" 
+                AutoPostBack="true" OnSelectedIndexChanged="ddlOptions_SelectedIndexChanged" 
+                onchange="showTextbox" Style="Height:40px; margin-left:10px">
+  <asp:ListItem Text="Selected Option.." Value="0" />
+  <asp:ListItem Text="Model" Value="1" />
+  <asp:ListItem Text="Manufacture Name" Value="2" />
+  <asp:ListItem Text="Type" Value="3" />
+  </asp:DropDownList>
+  <asp:TextBox ID="txtSearch" runat="server" Style="display:none; margin-left:10px; height:40px" placeholder="Enter Search term." OnTextChanged="txtSearch_TextChanged"></asp:TextBox>
+  </asp:TextBox>
+  <asp:Button  ID="btnSearch" runat="server" Style="height:40px; width:70px; border-radius:7px;" Text="Search"  OnClick="btnSearch_Click"/>  
+        </div>           
+    </table>
+    <div>
+        <asp:GridView runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" DataKeyNames="CarId" AllowSorting="True" ID="gvGridView">
+            <Columns>
+                <asp:BoundField DataField="CarId" HeaderText="CarId" ReadOnly="True" SortExpression="CarId" />
+                <asp:BoundField DataField="ManufacturerId" HeaderText="ManufacturerId" SortExpression="ManufacturerId" />
+                <asp:BoundField DataField="CarTypeId" HeaderText="CarTypeId" SortExpression="CarTypeId" />
+                <asp:BoundField DataField="TransmissionTypeId" HeaderText="TransmissionTypeId" SortExpression="TransmissionTypeId" />
+                <asp:BoundField DataField="ManufacturerName" HeaderText="ManufacturerName" SortExpression="ManufacturerName" />
+                <asp:BoundField DataField="Model" HeaderText="Model" SortExpression="Model" />
+                <asp:BoundField DataField="Type" HeaderText="Type" SortExpression="Type" />
+                <asp:BoundField DataField="Engine" HeaderText="Engine" SortExpression="Engine" />
+                <asp:BoundField DataField="BHP" HeaderText="BHP" SortExpression="BHP" />
+                <asp:BoundField DataField="Transmission" HeaderText="Transmission" SortExpression="Transmission" />
+                <asp:BoundField DataField="Mileage" HeaderText="Mileage" SortExpression="Mileage" />
+                <asp:BoundField DataField="Seat" HeaderText="Seat" SortExpression="Seat" />
+                <asp:BoundField DataField="AirBagDetails" HeaderText="AirBagDetails" SortExpression="AirBagDetails" />
+                <asp:BoundField DataField="BootSpace" HeaderText="BootSpace" SortExpression="BootSpace" />
+                <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price" />
+            </Columns>
+        </asp:GridView>
+    </div>
+
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:CIMSPROJECTConnectionString2 %>" SelectCommand="ListAllCars" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
+
+</asp:Content>
+
 
 
 
