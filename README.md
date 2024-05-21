@@ -452,6 +452,43 @@ SELECT * FROM CarTransmissionType
 DELETE FROM CarTransmissionType WHERE Id=3
 
 
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+AddCar SP
+
+USE [SatyaFirstAmerican]
+GO
+/****** Object:  StoredProcedure [dbo].[AddCar]    Script Date: 5/21/2024 4:42:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[AddCar]
+@CarId int,
+@ManufacturerId int,
+@CarTypeId int,
+@TransmissiontypeID int,
+@ManufacturerName nvarchar(100),
+@Model nvarchar(100),
+@Type nvarchar(50),
+@Engine nvarchar(4),
+@BHP int,
+@Transmission nvarchar(50),
+@Mileage int,
+@Seats int,
+@AirBagDetails nvarchar(255),
+@BootSpace int,
+@Price decimal(18,2)
+AS 
+BEGIN 
+      INSERT INTO Car VALUES(@CarId, @ManufacturerId, @CarTypeId, @TransmissiontypeID, @ManufacturerName,@Model,@Type, @Engine, @BHP, @Transmission,@Mileage, @Seats, @AirBagDetails,
+	         @BootSpace,@Price);
+END
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 
 
