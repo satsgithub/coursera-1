@@ -455,10 +455,12 @@ DELETE FROM CarTransmissionType WHERE Id=3
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 AddCar SP
+----------
+
 
 USE [SatyaFirstAmerican]
 GO
-/****** Object:  StoredProcedure [dbo].[AddCar]    Script Date: 5/21/2024 4:42:57 PM ******/
+  StoredProcedure [dbo].[AddCar]   
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
