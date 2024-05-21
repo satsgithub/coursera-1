@@ -384,7 +384,6 @@ GO
 -- Create the Car Table
 CREATE TABLE Car (
     CarId INT PRIMARY KEY,
-    
     ManufacturerId INT NOT NULL,
     CarTypeId INT NOT NULL,
     TransmissionTypeId INT NOT NULL,
@@ -456,12 +455,10 @@ DELETE FROM CarTransmissionType WHERE Id=3
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 AddCar SP
-----------
-
 
 USE [SatyaFirstAmerican]
 GO
-  StoredProcedure [dbo].[AddCar]   
+/****** Object:  StoredProcedure [dbo].[AddCar]    Script Date: 5/21/2024 4:42:57 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -491,149 +488,75 @@ END
 
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Last
+==================TO Create into grid =============================Aishwarya==============================
+<%@ Page Title="Customer Data" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Customer.aspx.cs" Inherits="CarInfoMang.Customer" %>
 
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        #btnSearch{
+            
+                
+        }
+    </style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="cphOpenSideNav" runat="server">
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="cphSideNav" runat="server">
+</asp:Content>
+<asp:Content ID="Content4" ContentPlaceHolderID="cphBody" runat="server">
 
-AddCar SP
----------
----------
+    <table class="w-100">
+      <script type="text/javascript">
+    function showTextbox() {
+        var dropdown = document.getElementById('<%= ddlOptions.ClientID %>');
+        var textbox = document.getElementById('<%= txtSearch.ClientID %>');
+        if (dropdown.value !== "") {
+            textbox.style.display = 'inline-block';
+        }
+        else {
+            textbox.style.display = 'none';
+        }
+    }
+     </script>
+        <div style="background-color: darkgrey; padding-top: 20px; padding-bottom:20px; font-family:'Garamond'">
+            <asp:DropDownList ID="ddlOptions" AppendDataBoundItems="true" runat="server" 
+                AutoPostBack="true" OnSelectedIndexChanged="ddlOptions_SelectedIndexChanged" 
+                onchange="showTextbox" Style="Height:40px; margin-left:10px">
+  <asp:ListItem Text="Selected Option.." Value="0" />
+  <asp:ListItem Text="Model" Value="1" />
+  <asp:ListItem Text="Manufacture Name" Value="2" />
+  <asp:ListItem Text="Type" Value="3" />
+  </asp:DropDownList>
+  <asp:TextBox ID="txtSearch" runat="server" Style="display:none; margin-left:10px; height:40px" placeholder="Enter Search term." OnTextChanged="txtSearch_TextChanged"></asp:TextBox>
+  </asp:TextBox>
+  <asp:Button  ID="btnSearch" runat="server" Style="height:40px; width:70px; border-radius:7px;" Text="Search"  OnClick="btnSearch_Click"/>  
+        </div>           
+    </table>
+    <div>
+        <asp:GridView runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" DataKeyNames="CarId" AllowSorting="True" ID="gvGridView">
+            <Columns>
+                <asp:BoundField DataField="CarId" HeaderText="CarId" ReadOnly="True" SortExpression="CarId" />
+                <asp:BoundField DataField="ManufacturerId" HeaderText="ManufacturerId" SortExpression="ManufacturerId" />
+                <asp:BoundField DataField="CarTypeId" HeaderText="CarTypeId" SortExpression="CarTypeId" />
+                <asp:BoundField DataField="TransmissionTypeId" HeaderText="TransmissionTypeId" SortExpression="TransmissionTypeId" />
+                <asp:BoundField DataField="ManufacturerName" HeaderText="ManufacturerName" SortExpression="ManufacturerName" />
+                <asp:BoundField DataField="Model" HeaderText="Model" SortExpression="Model" />
+                <asp:BoundField DataField="Type" HeaderText="Type" SortExpression="Type" />
+                <asp:BoundField DataField="Engine" HeaderText="Engine" SortExpression="Engine" />
+                <asp:BoundField DataField="BHP" HeaderText="BHP" SortExpression="BHP" />
+                <asp:BoundField DataField="Transmission" HeaderText="Transmission" SortExpression="Transmission" />
+                <asp:BoundField DataField="Mileage" HeaderText="Mileage" SortExpression="Mileage" />
+                <asp:BoundField DataField="Seat" HeaderText="Seat" SortExpression="Seat" />
+                <asp:BoundField DataField="AirBagDetails" HeaderText="AirBagDetails" SortExpression="AirBagDetails" />
+                <asp:BoundField DataField="BootSpace" HeaderText="BootSpace" SortExpression="BootSpace" />
+                <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price" />
+            </Columns>
+        </asp:GridView>
+    </div>
 
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:CIMSPROJECTConnectionString2 %>" SelectCommand="ListAllCars" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
 
-use [SatyaFirstAmerican]
-
-GO
-
-CREATE PROCEDURE AddCar
-@CarId int,
-@ManufacturerId int,
-@CarTypeId int,
-@TransmissiontypeID int,
-@ManufacturerName nvarchar(100),
-@Model nvarchar(100),
-@Type nvarchar(50),
-@Engine nvarchar(4),
-@BHP int,
-@Transmission nvarchar(50),
-@Mileage int,
-@Seats int,
-@AirBagDetails nvarchar(255),
-@BootSpace int,
-@Price decimal(18,2)
-AS 
-BEGIN 
-      INSERT INTO Car VALUES(@CarId, @ManufacturerId, @CarTypeId, @TransmissiontypeID,
-	                         @ManufacturerName,@Model,@Type, @Engine, @BHP, @Transmission,@Mileage, @Seats, @AirBagDetails,
-	                         @BootSpace,@Price);
-END
-
-
-
-
-
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-Last Updated tables
-
-use [SatyaFirstAmerican]
-
-
-
--- Create the Manufacturer Table
-CREATE TABLE Manufacturer (
-    Id INT PRIMARY KEY IDENTITY(101,1),
-    Name NVARCHAR(255) NOT NULL,
-    ContactNo CHAR(10) NOT NULL,
-    RegisteredOffice NVARCHAR(255) NOT NULL
-);
-GO
-
--- Create the CarType Table
-CREATE TABLE CarType (
-    Id INT PRIMARY KEY IDENTITY(201,1),
-    Type NVARCHAR(50) NOT NULL
-);
-GO
-
--- Create the CarTransmissionType Table
-CREATE TABLE CarTransmissionType (
-    Id INT PRIMARY KEY IDENTITY(301,1),
-    Type NVARCHAR(50) NOT NULL
-);
-GO
-
--- Create the Car Table
-CREATE TABLE Car (
-    CarId INT PRIMARY KEY,
-
-    ManufacturerId INT NOT NULL,
-    CarTypeId INT NOT NULL,
-    TransmissionTypeId INT NOT NULL,
-    ManufacturerName NVARCHAR(255) NOT NULL,
-    Model NVARCHAR(255) UNIQUE NOT NULL,
-    Type NVARCHAR(50) NOT NULL,
-    Engine CHAR(4) NOT NULL CHECK (Engine LIKE '[0-9].[0-9]L'),
-    BHP INT NOT NULL,
-    Transmission NVARCHAR(50) NOT NULL CHECK (Transmission IN ('Manual', 'Automatic')),
-    Mileage INT NOT NULL,
-    Seat INT NOT NULL,
-    AirBagDetails NVARCHAR(255) NOT NULL,
-    BootSpace INT NOT NULL,
-    Price DECIMAL(18, 2) NOT NULL,
-    FOREIGN KEY (ManufacturerId) REFERENCES Manufacturer(Id),
-    FOREIGN KEY (CarTypeId) REFERENCES CarType(Id),
-    FOREIGN KEY (TransmissionTypeId) REFERENCES CarTransmissionType(Id)
-);
-GO
-
--- Insert initial data into CarType
-INSERT INTO CarType (Type) VALUES ('Hatchback'), ('Sedan'), ('SUV');
-GO
-
--- Insert initial data into CarTransmissionType
-INSERT INTO CarTransmissionType (Type) VALUES ('Manual'), ('Automatic');
-GO
-
-
----Insert initial data into Manufacturer
-INSERT INTO Manufacturer (Name, ContactNo, RegisteredOffice) VALUES ('Maruti', 1234567890, 'Pune');
-INSERT INTO Manufacturer (Name, ContactNo, RegisteredOffice) VALUES ('Toyota', 2234567890, 'Mumbai');
-INSERT INTO Manufacturer (Name, ContactNo, RegisteredOffice) VALUES ('Tata', 3234567890, 'UP');
-
-
-
-
-select * from Car
-
-select * from CarType
-
-select * from Manufacturer
-
-select * from CarTransmissionType
-
-
----delete from Car SP
-
-delete from Car Where CarId=1;
-
----Add. List and Delete into CarType SP
-INSERT INTO CarType Values( 'Wagons')
-SELECT * FROM CarType
-Delete from CarType WHERE Id=202  --- will only delete if it is not being used in
-                                ---the car table since it is referencing it, Use 
-								---BL for calling Car table to check whether the 
-								---data you want to delete is in the car table or not
-
---DELETE FROM CarType WHERE Id=4
-
-
----Add, List and Delete into CarTransmissionType SP
-
-INSERT INTO CarTransmissionType VALUES('Hybrid')
-SELECT * FROM CarTransmissionType
-DELETE FROM CarTransmissionType WHERE Id=3
+</asp:Content>
 
 
 
