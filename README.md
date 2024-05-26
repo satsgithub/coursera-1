@@ -801,6 +801,27 @@ notes/1716465858391?context=%7B%22contextType%22%3A%22chat%22%7D
 https://www.figma.com/board/dOIXk6JxO1MblFh0jBxwsM/Satya%3A-Admin--USE-CASE-DIAGRAM?node-id=0%3A1&t=iAyzZVpRreT1ZOkk-1
 
 
+=============================================================================================================================================================================================
+=============================================================================================================================================================================================
+
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPageTemp.Master" AutoEventWireup="true" CodeBehind="HomePage.aspx.cs" Inherits="CarInfoManagement.HomePage" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="cphOpenSideNav" runat="server">
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="cphSideNav" runat="server">
+</asp:Content>
+<asp:Content ID="Content4" ContentPlaceHolderID="cphBody" runat="server">
+    <h1 style="text-align:center;margin-top:30px;">Welcome to Car Information Management System!</h1>
+    
+    <asp:Image ID="Image1" runat="server" ImageUrl="~/CarInfoManagement/Porsche_img.jpg" />
+    
+    
+</asp:Content>
+
+
+
 
 
 
